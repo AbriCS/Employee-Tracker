@@ -2,15 +2,14 @@ INSERT INTO department(id, name)
 
 VALUES 
 (1, "Ops"),
-(2, "Clinical")
-(3, "Management")
-(4, "Laboratories")
-(5, "Research")
-(6, "Education")
+(2, "Clinical"),
+(3, "Management"),
+(4, "Laboratories"),
+(5, "Research"),
+(6, "Education");
 
 --6 department 12 roles, 12 employees
-INSERT INTO
- role (id, title, salary, department_id,)
+INSERT INTO roles (id, title, salary, department_id,)
 
  VALUES
  (1, "Nurse", 30000, 2),
@@ -19,12 +18,12 @@ INSERT INTO
  (4, "Porter", 20000, 1),
  (5, "Receptionist", 15000, 1),
  (6, "Security", 10000, 1),
- (7, "Nurse", 35000, 5),
+ (7, "Auxilliary", 35000, 5),
  (8, "Caterer", 16400, 1),
  (9, "Lecturer", 70000, 6),
  (10, "Clincal Manager", 100000, 3),
  (11, "Operational Manager", 100000, 3),
- (12, "Radiographer", 40000, 4),
+ (12, "Radiographer", 40000, 4);
 
  INSERT INTO
  employee (employee_id, first_name, last_name, role_id, manager_id)
