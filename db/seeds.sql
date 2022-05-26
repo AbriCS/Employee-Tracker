@@ -13,34 +13,35 @@ INSERT INTO
  role (id, title, salary, department_id,)
 
  VALUES
- (110, "Nurse", 30000, 2),
- (120, "Doctor", 60000, 2),
- (130, "Scientist", 40000, 4),
- (140, "Porter", 20000, 1),
- (150, "Receptionist", 15000, 1),
- (160, "Security", 10000, 1),
- (170, "Nurse", 35000, 5),
- (180, "Caterer", 16400, 1),
- (190, "Lecturer", 70000, 6),
- (201, "Clincal Manager", 100000, 3),
- (202, "Operational Manager", 100000, 3),
+ (1, "Nurse", 30000, 2),
+ (2, "Doctor", 60000, 2),
+ (3, "Scientist", 40000, 4),
+ (4, "Porter", 20000, 1),
+ (5, "Receptionist", 15000, 1),
+ (6, "Security", 10000, 1),
+ (7, "Nurse", 35000, 5),
+ (8, "Caterer", 16400, 1),
+ (9, "Lecturer", 70000, 6),
+ (10, "Clincal Manager", 100000, 3),
+ (11, "Operational Manager", 100000, 3),
+ (12, "Radiographer", 40000, 4),
 
  INSERT INTO
  employee (employee_id, first_name, last_name, role_id, manager_id)
 
  VALUES
- (1001, "Lucy, Lui, 110, 201")
- (2001, "Janet, Jackson, 120, 110")
- (3001, "Susan, Stanhope, 130, 120")
- (4001, "Michael, Jordan, 140, 120")
- (5001, "Mary, Yram, 150, 190")
- (6001, "Sidney, Klein, 160, 190")
- (7001, "Joseph, Constable, 170, 110")
- (8001, "Heather, Smith, 180, 170")
- (9001, "Fern, Cantor, 202, NULL")
- (1011, "Lee, Smith, 201, 9001")
- (2011, "Helen, Oxford, 110, 1011")
- (3011, "Mary, Smith, 190, 1011")
+ (1, "Lucy", "Lui", 1, 10),
+ (2, "Janet", "Jackson", 2, 10),
+ (3, "Susan", "Stanhope", 3, 2),
+ (4, "Michael", "Jordan", 4, 11),
+ (5, "Mary", "Yram", 5, 7),
+ (6, "Sidney", "Klein", 6, 11),
+ (7, "Joseph", "Constable", 7, 1),
+ (8, "Heather", "Smith", 8, 11),
+ (9, "Fern", "Cantor", 9, 1),
+ (10, "Lee", "Smith", 10, NULL),
+ (11, "Helen", "Oxford", 11, 10),
+ (12, "Mary", "Smith", 12, 2),
 
 
  

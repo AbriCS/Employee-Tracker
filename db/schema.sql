@@ -31,3 +31,7 @@ CREATE TABLE employee(
     REFERENCES employee(id)
     ON DELETE SET NULL   
 );
+
+CREATE TABLE manager (
+    manager_id INT PRIMARY KEY NOT NULL
+)
