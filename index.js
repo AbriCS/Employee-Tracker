@@ -1,8 +1,8 @@
 const inquirer = require("inquirer");
-const db = requirer ("./db/connection.js")
+const db = require ("./db/connection.js")
+require("console.table")
 
-
-async function Questions () {
+async function askQuestions () {
    inquirer.prompt([{
        type:"list",
        name: "options",
@@ -41,7 +41,9 @@ async function Questions () {
        }
 
    })
-    
+}
+askQuestions ()
+
 async function viewAllDepartments(){
     db.query("SELECT * FROM department", (err, results) => {
         if (err){
@@ -54,7 +56,7 @@ async function viewAllDepartments(){
 
 async function viewAllRoles() {
     db.query(
-        "SELECT role.title, role.id, role.salary, FROM role INNER JOIN department ON role.department_id = department.id",
+        "SELECT * FROM roles LEFT JOIN department ON roles.department_id = department.id",
 (err, results) => {
     if (err) {
         console.log(err);
@@ -66,10 +68,8 @@ async function viewAllRoles() {
 }
 
 async function viewAllEmployees() {
-    let viewEmployeesQuery = fs.readFileSync(
-        "./db/viewEmployeesQuery.sql", "utf8"
-    );
-    db.query(viewEmployeesQuery, (err, results) => {
+    
+    db.query(`SELECT * FROM employee LEFT JOIN roles ON employee.role_id = roles.id`, (err, results) => {
         if (err) {
             console.log(err);
         } console.table(results);
