@@ -1,128 +1,47 @@
 const inquirer = require("inquirer");
-const mysql = require("mysql2");
-const express = require("express");
-const fs = require("fs");
+const db = requirer ("./db/connection.js")
 
-const PORT = process.env.PORT || 3003;
-const app = express();
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "employee_db",
-}, console.log ("connected to employee db")
-);
-
-app.listen(PORT, ()=> {
-    console.log(`Server running on Port${PORT}`);
-});
-
-let Questions = [{
-    prefix: "What is the task?",
-    type: "list",
-    name: "Options",
-    choices:[
-        "View all departments",
-        "View all roles",
-        "View employees",
-        "View budget",
-        "Add a department",
-        "Add an employee",
-        "Add a role",
-        "Update Manager",
-        "Update an employee",
-        "Delete",
-        "Quit",
-    ],
-},
-{
-    type:"list",
-    name: "viewEmployees",
-    message: "What would you like to see?",
-    choices: ["View all", "View by department", "View by manager"],
-    when: (answers) => answers.menuOption === "View employee",
-},
-
-{
-    type:"list",
-    name: "deleteData",
-    message: "What would you like to delete?",
-    choices: ["Delete role", "Delete department", "Delete employee"],
-    when: (answers) => answers.menuOption === "Remove",
-},
-];
-
-let addDepartment = [{
-    type: "input",
-    name: "addDept",
-    message: "Add a department"
-},
-];
-
-Questions();
 async function Questions () {
-    const menuOption = await inquirer.prompt(Questions);
-    switch (menuOption.Options){
-        case "View all departments": viewAllDepartments();
+   inquirer.prompt([{
+       type:"list",
+       name: "options",
+       message: "what would you like to do?",
+       choices: ["View all departments", "View all roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an employee role", "Exit"]
+   }   
+   ])
+
+   .then ((answer)=>{
+       switch(answer.options){
+        case "View all departments": 
+        viewAllDepartments();
         break;
-        case "View roles":
+         
+        case "View all roles":
             viewAllRoles();
         break;
-case "View employees":
-        switch (menuOption.viewEmployees){    
-        case "View all":
+
+        case "View All Employees":
             viewAllEmployees();
         break;
-        case "View by manager":
-            viewAllByManager();
-        break;
-        case "View by department":
-            viewAllByDepartment();
-        break;
-        default:
-            console.log ("retry")
-    }
-    break;
-    case "View budget":
-            viewBudget();
-    break;
-    case "Add a Department":
+        case "Add a Department":
             addDepartment();
     break;
-    case "Add a role":
+        case "Add a Role":
             addRole();
     break;
     case "Add a employee":
             addEmployee();
     break;
-    case "Update a role":
+    case "Update an employee role":
             ChangeRole();
     break;
-    case "Update a manager":
-            ChangeManager();
-    break;
-    case "Exit":
-            process.exit();
-    break;
+    default:
+        db.end()
+       }
 
-    case "Remove":      
-    switch (menuOption.viewEmployees) {
-       
-        case "Delete a Department":
-                deleteDepartment();
-        break;
-        case "Delete a role":
-                deleteRole();
-        break;
-        case "Delete an employee":
-                deleteEmployee(); 
-        break;
-        default:
-            console.log("OOPs!! error");  
-    }
-  }
-}
+   })
+    
 async function viewAllDepartments(){
     db.query("SELECT * FROM department", (err, results) => {
         if (err){
@@ -135,8 +54,7 @@ async function viewAllDepartments(){
 
 async function viewAllRoles() {
     db.query(
-        "SELECT role.title, role.id, role.salary, department.department_name
-FROM role INNER JOIN department ON role.department_id = department.id,
+        "SELECT role.title, role.id, role.salary, FROM role INNER JOIN department ON role.department_id = department.id",
 (err, results) => {
     if (err) {
         console.log(err);
@@ -250,7 +168,7 @@ async function newRoleQuery() {
 });
 }
 
-sync function addEmployee() {
+async function addEmployee() {
     let addNewQuery = 
     "SELECT role.title, CONCAT(m.first_name, SPACE(1), m.last_name) AS Manager, express.role_id, e.manager_id FROM employee e INNER JOIN role ON role.id = e.role_id LEFT JOIN employee m ON m.employee_id = e.manager_id";
     db.query(addNewQuery, (err, results)=> {
