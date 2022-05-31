@@ -9,7 +9,7 @@ VALUES
 (6, "Education");
 
 --6 department 12 roles, 12 employees
-INSERT INTO roles (id, title, salary, department_id,)
+INSERT INTO roles (id, title, salary, department_id)
 
  VALUES
  (1, "Nurse", 30000, 2),
@@ -26,7 +26,7 @@ INSERT INTO roles (id, title, salary, department_id,)
  (12, "Radiographer", 40000, 4);
 
  INSERT INTO
- employee (employee_id, first_name, last_name, role_id, manager_id)
+ employee (id, first_name, last_name, role_id, manager_id)
 
  VALUES
  (1, "Lucy", "Lui", 1, 10),
@@ -40,7 +40,7 @@ INSERT INTO roles (id, title, salary, department_id,)
  (9, "Fern", "Cantor", 9, 1),
  (10, "Lee", "Smith", 10, NULL),
  (11, "Helen", "Oxford", 11, 10),
- (12, "Mary", "Smith", 12, 2),
+ (12, "Mary", "Smith", 12, 2);
 
 
  
