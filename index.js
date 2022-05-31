@@ -76,57 +76,36 @@ async function viewAllEmployees() {
         askQuestions();
     });
 }
-
-async function viewEmployeesByManager() {
-    let viewEmployeesQuery = fs.readFileSync(
-        "./db/viewEmployeeMgrQuery.sql", "utf8"
-    );
-    db.query(viewEmployeesQuery, (err, results) => {
-        if (err) {
-            console.log(err);
-        } console.table(results);
-        askQuestions();
-    });
-}
-
-async function viewEmployeesByDepartment() {
-    let viewByDeptQuery = fs.readFileSync(
-        "./db/viewByDepartment.sql", "utf8"
-    );
-    db.query(viewByDeptQuery, (err, results) => {
-        if (err) {
-            console.log(err);
-        } console.table(results);
-        askQuestions();
-    });
-}
-
-async function viewBudget(){
-    console.log("view budget function");
-}
-
-async function addDepartment() {
-    const newDepartment = await inquirer.prompt(addDepartmentQuery);
-    console.log(newDepartment.addDept);
-    dbquery(
-        `INSERT INTO department (department_name) VALUES ("${newDepartment.addDept}")`,
+async function addDepartment() { 
+    inquirer.prompt([{
+       type:"input",
+       name: "addDepartment",
+       message: "what is the department you would like to add?"
+    }]).then ((answer)=>{
+    const query =`INSERT INTO department(name) VALUES (?)`
+    db.query(
+        query, answer.addDepartment,
         (err, results) => {
             if (err) {
                 console.log(err);
             }
-            console.log(`${newDepartment.addDept} new department added!`);
+            console.log(`${answer.addDepartment} new department added!`);
+            viewAllDepartments();
         }
     );
-    viewAllDepartments();
+    })
+    
+    
+    
 }
 
-async function newRoleQuery() {
+async function addRole() {
     db.query("SELECT * FROM department", (err, results) => {
         if (err){
             console.log(err);
         }
     let departmentArray = results.map((dpts) => ({
-      name:dpts.department_name,
+      name:dpts.name,
       value: dpts.id,  
     }));
     inquirer.prompt ([{
@@ -150,10 +129,10 @@ async function newRoleQuery() {
 ])
 .then((answers) => {
     db.query(
-        "INSERT INTO role SET ?",
+        "INSERT INTO roles SET ?",
         {
             title: answers.newRoleName,
-            salary: answere.newRoleSalary,
+            salary: answers.newRoleSalary,
             department_id: answers.newRoleDept,
         },
     (err, results) => {
