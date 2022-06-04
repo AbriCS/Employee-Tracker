@@ -30,7 +30,7 @@ async function askQuestions () {
         case "Add a Role":
             addRole();
     break;
-    case "Add a employee":
+    case "Add an Employee":
             addEmployee();
     break;
     case "Update an employee role":
@@ -149,7 +149,7 @@ async function addRole() {
 
 async function addEmployee() {
     let addNewQuery = 
-    "SELECT role.title, CONCAT(m.first_name, SPACE(1), m.last_name) AS Manager, express.role_id, e.manager_id FROM employee e INNER JOIN role ON role.id = e.role_id LEFT JOIN employee m ON m.employee_id = e.manager_id";
+    "SELECT * FROM roles"
     db.query(addNewQuery, (err, results)=> {
         if (err) {
             console.log(err);
@@ -158,10 +158,7 @@ async function addEmployee() {
         name: roleList.title,
         value: roleList.role_id,
     }));
-    let managerArray = results.map((managerList) => ({
-        name: managerList.Manager,
-        value: managerList.manager_id,
-    }));
+   
 
     inquirer.prompt([
       { type: "input",
@@ -181,12 +178,7 @@ async function addEmployee() {
           message: "Add a new role here",
           choices: roleArray,
       },
-      {
-        type:"list",
-        name:"newMgr",
-        message: "Add a new Manager here",
-        choices: managerArray,
-    },
+      
     ])
     
     .then((answers) => {
@@ -195,8 +187,8 @@ async function addEmployee() {
        {
            first_name: answers.addFirstName,
            last_name: answers.addLastName,
-           role_id: answers.addNewEmpRole,
-           manager_id: answers.addNewEmpMan,
+           role_id: answers.newRole,
+           
        }, 
        (err, results) => {
            if (err) {
@@ -209,8 +201,8 @@ async function addEmployee() {
     });
     });
 }
-function updateRole() {
-    db.query("SELECT * FROM role", (err, results)=> {
+function ChangeRole() {
+    db.query("SELECT * FROM roles", (err, results)=> {
         if (err) {
             console.log(err);
         }
