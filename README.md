@@ -43,7 +43,7 @@ When the task is finished, then the user scrolls with the arrow keys to 'Exit' a
 Below is the link to an explanatory video about how to use the application. 
 ```
 
-[Employee Tracker Walkthrough](https://drive.google.com/file/d/1GivryJkbQ5tEpyuHlpaZY3WYOlvjQVv3/view?usp=sharing)
+[Employee Tracker Walkthrough](https://drive.google.com/file/d/1vjJcNHJFExv3PgP-xyOWtFy6bLLBizn2/view?usp=sharing)
 
 
 ## Screenshot
